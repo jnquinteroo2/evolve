@@ -402,7 +402,7 @@ dialog::backdrop {
   .catalogo__rejilla {
     display: grid;
     gap: var(--card-gap);
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   }
   .catalogo__vacio {
     display: grid;
@@ -700,4 +700,277 @@ main > section.libre > .wrap {
 }
 :root {
   --card: #fdfdfa;
+}
+
+@layer components {
+  .destacadas__lista {
+    display: grid;
+    gap: var(--card-gap);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 1023px) {
+    .destacadas__lista {
+      grid-template-columns: 1fr;
+    }
+    .destacadas__lista .tarjeta {
+      grid-template-columns: 2fr 3fr;
+    }
+    .destacadas__lista .tarjeta__foto {
+      aspect-ratio: auto;
+      min-height: 100%;
+    }
+  }
+  @media (max-width: 639px) {
+    .destacadas__lista .tarjeta {
+      grid-template-columns: 1fr;
+    }
+    .destacadas__lista .tarjeta__foto {
+      aspect-ratio: 16 / 10;
+    }
+    .destacadas__lista .tarjeta__datos {
+      display: none;
+    }
+  }
+  .servicios__rejilla {
+    display: grid;
+    gap: var(--s-7) var(--gutter);
+    grid-template-columns: 5fr 4fr 3fr;
+    align-items: start;
+  }
+  @media (max-width: 1023px) {
+    .servicios__rejilla {
+      grid-template-columns: 1fr 1fr;
+    }
+    .servicios__foto {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 639px) {
+    .servicios__rejilla {
+      grid-template-columns: 1fr;
+    }
+  }
+  .servicios__foto,
+  .pilares__foto {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .servicios__foto img,
+  .pilares__foto img {
+    object-fit: cover;
+  }
+  .servicios__titulo {
+    font-size: var(--t-card);
+    margin-bottom: var(--s-4);
+  }
+  .lista-servicios li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .pilares__rejilla {
+    display: grid;
+    gap: var(--s-7) var(--gutter);
+    grid-template-columns: 6fr 5fr;
+    align-items: start;
+  }
+  @media (max-width: 1023px) {
+    .pilares__rejilla {
+      grid-template-columns: 1fr;
+    }
+    .pilares__foto {
+      aspect-ratio: 16 / 9;
+    }
+  }
+  .pilares__lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-5) var(--gutter);
+  }
+  @media (max-width: 639px) {
+    .pilares__lista {
+      grid-template-columns: 1fr;
+    }
+  }
+  .pilares__lista dt {
+    font-family: var(--font-display);
+    font-size: var(--t-card);
+  }
+  .pilares__lista dd {
+    color: var(--muted);
+    margin-top: var(--s-1);
+  }
+  .pilares__enlace {
+    display: inline-flex;
+    margin-top: var(--s-6);
+    min-height: 44px;
+    align-items: center;
+    font-weight: 500;
+  }
+}
+
+@layer components {
+  .pagina-simple {
+    padding-top: calc(var(--nav) + var(--s-8));
+  }
+  .servicios-pagina {
+    display: grid;
+    gap: var(--s-8) var(--gutter);
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 767px) {
+    .servicios-pagina {
+      grid-template-columns: 1fr;
+    }
+  }
+  .servicios-pagina__grupo h2 {
+    font-size: var(--t-h3);
+    margin-bottom: var(--s-4);
+  }
+  .servicios-pagina__lista > div {
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .servicios-pagina__lista dt {
+    font-weight: 500;
+    font-size: 18px;
+  }
+  .servicios-pagina__lista dd {
+    color: var(--muted);
+  }
+  .pagina-simple__accion {
+    display: grid;
+    gap: var(--s-4);
+    justify-items: start;
+    margin-top: var(--s-8);
+  }
+  .nosotros {
+    display: grid;
+    gap: var(--s-7) var(--gutter);
+    grid-template-columns: 7fr 5fr;
+    align-items: start;
+  }
+  @media (max-width: 1023px) {
+    .nosotros {
+      grid-template-columns: 1fr;
+    }
+  }
+  .nosotros__texto {
+    display: grid;
+    gap: var(--s-5);
+  }
+  .nosotros__texto > p {
+    font-size: 18px;
+    max-width: 62ch;
+  }
+  .nosotros__texto h2 {
+    font-size: var(--t-h3);
+    margin-top: var(--s-5);
+  }
+  .nosotros__foto {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    margin: 0;
+  }
+  @media (min-width: 1024px) {
+    .nosotros__foto {
+      position: sticky;
+      top: calc(var(--nav) + var(--s-5));
+    }
+  }
+  .nosotros__foto img {
+    object-fit: cover;
+  }
+  .contacto {
+    display: grid;
+    gap: var(--s-8) var(--gutter);
+    grid-template-columns: 5fr 7fr;
+    align-items: start;
+  }
+  @media (max-width: 1023px) {
+    .contacto {
+      grid-template-columns: 1fr;
+    }
+  }
+  .contacto__datos {
+    display: grid;
+    gap: var(--s-6);
+    justify-items: start;
+  }
+  .contacto__lista {
+    display: grid;
+    gap: var(--s-4);
+    width: 100%;
+  }
+  .contacto__lista dt {
+    font-size: var(--t-small);
+    color: var(--muted);
+  }
+  .contacto__lista dd {
+    font-size: 18px;
+    overflow-wrap: anywhere;
+  }
+  .contacto__form {
+    display: grid;
+    gap: var(--s-5);
+    padding: var(--s-6);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+  }
+  .contacto__form h2 {
+    font-size: var(--t-h3);
+  }
+  .contacto__fila {
+    display: grid;
+    gap: var(--s-5);
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 639px) {
+    .contacto__fila {
+      grid-template-columns: 1fr;
+    }
+    .contacto__form {
+      padding: var(--s-5);
+    }
+  }
+  .contacto__interes {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .contacto__interes legend {
+    font-weight: 500;
+    margin-bottom: var(--s-2);
+  }
+  .contacto__opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+  .contacto__opcion {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .contacto__opcion:has(input:checked) {
+    border-color: var(--action);
+    box-shadow: inset 0 0 0 1px var(--action);
+  }
+  .contacto__opcion input {
+    accent-color: var(--p-accent);
+    width: 18px;
+    height: 18px;
+  }
+  .contacto__form .btn {
+    justify-self: start;
+  }
 }

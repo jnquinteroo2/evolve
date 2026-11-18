@@ -45,7 +45,8 @@ for (const [slug, m] of Object.entries(medios)) {
     const { estado, r } = await subir(archivo, foto.publicId, 'image');
     foto.width = r.width;
     foto.height = r.height;
-    estado === 'subida' ? subidas++ : previas++;
+    if (estado === 'subida') subidas++;
+    else previas++;
     console.log(`${estado.padEnd(9)} ${foto.publicId} ${r.width}x${r.height}`);
   }
   if (m.video) {
@@ -53,7 +54,8 @@ for (const [slug, m] of Object.entries(medios)) {
     const { estado, r } = await subir(archivo, m.video.publicId, 'video');
     m.video.width = r.width;
     m.video.height = r.height;
-    estado === 'subida' ? subidas++ : previas++;
+    if (estado === 'subida') subidas++;
+    else previas++;
     console.log(`${estado.padEnd(9)} ${m.video.publicId} (video) ${r.width}x${r.height}`);
   }
 }
