@@ -1,0 +1,13 @@
+{
+  "casa-campestre-cota-el-abra": { "fuente": "_fotos-originales/COTA", "fotos": [3, 9, 1, 8, 4, 10, 7, 2, 5] },
+  "casa-lote-funza": { "fuente": "_fotos-originales/Lote", "fotos": [1, 5, { "n": 3, "recorte": { "izquierda": 0.05 } }, { "n": 6, "recorte": { "izquierda": 0.05 } }, { "n": 7, "recorte": { "izquierda": 0.05 } }] },
+  "casa-tres-niveles-girardot": { "fuente": "_extraidas/07-casa-girardot", "fotos": [1, 8, 3, 2, 4, 6, 7, 9] },
+  "bodegas-arriendo-desde-600-m2": { "fuente": "_fotos-originales/Bodega 1", "fotos": [7, 1, 3, 4, 5, 9, 8, 2, 10, 6] },
+  "casa-campestre-cajica": { "fuente": "_fotos-originales/Cajica", "fotos": [{ "n": 5, "recorte": { "izquierda": 0.05 } }, { "n": 9, "recorte": { "izquierda": 0.05 } }, 1, 4, 6, 7, 2, 3] },
+  "casa-funza-conjunto": { "fuente": "_fotos-originales/Casa funza co", "fotos": [5, 3, 2, 1, 4] },
+  "edificio-multifamiliar-usaquen": { "fuente": "_fotos-originales/Edificio", "fotos": [9, 5, 4, 6, 7, 1, 2, 8, 3] },
+  "apartamento-kuali-santa-marta": { "fuente": "_fotos-originales/Casa santa marta", "fotos": [1, 9, 3, 2, 5, 6, 8, 7] },
+  "bodega-esquinera-fontibon": { "fuente": "_fotos-originales/BODEGA", "fotos": [8, 1, 5, 3, 4, 6, 7, 10, 2, 9] },
+  "bodega-parque-industrial-aepi-cota": { "fuente": "_extraidas/10-bodega-aepi", "fotos": [1, { "n": 2, "recorte": { "abajo": 0.14 } }, { "n": 3, "recorte": { "abajo": 0.14 } }, { "n": 4, "recorte": { "abajo": 0.14 } }, { "n": 5, "recorte": { "abajo": 0.14 } }, { "n": 6, "recorte": { "abajo": 0.14 } }, { "n": 7, "recorte": { "abajo": 0.14 } }, { "n": 8, "recorte": { "abajo": 0.14 } }, { "n": 9, "recorte": { "abajo": 0.14 } }, { "n": 10, "recorte": { "abajo": 0.14 } }, { "n": 11, "recorte": { "abajo": 0.14 } }, { "n": 12, "recorte": { "abajo": 0.14 } }, { "n": 13, "recorte": { "abajo": 0.14 } }, 18] },
+  "casa-multifamiliar-suba": { "fuente": "_extraidas/12-casa-multifamiliar-bogota", "video": "01.mp4", "fotogramas": [1.5] }
+}

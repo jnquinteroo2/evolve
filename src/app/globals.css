@@ -1,0 +1,225 @@
+@layer theme, base, kit, kit-layout, kit-motion, components, utilities;
+
+@import "tailwindcss";
+@import "../kit/system.css" layer(kit);
+@import "../kit/layout.css" layer(kit-layout);
+@import "../kit/motion.css" layer(kit-motion);
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted-ink: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-action: var(--action);
+  --color-action-ink: var(--action-ink);
+  --color-teja: var(--p-teja);
+  --color-primary: var(--action);
+  --color-primary-foreground: var(--action-ink);
+  --color-border: var(--line-strong);
+  --color-input: var(--line-strong);
+  --color-ring: var(--p-accent);
+  --color-muted: var(--surface);
+  --color-muted-foreground: var(--muted);
+  --color-destructive: var(--p-error);
+  --font-sans: var(--font-text);
+  --font-display: var(--font-display);
+}
+
+:root {
+  --p-bg: #f6f6f1;
+  --p-surface: #dce7d8;
+  --p-ink: #1b2822;
+  --p-muted: #56655d;
+  --p-accent: #183e32;
+  --p-accent-ink: #f6f6f1;
+  --p-action: #183e32;
+  --p-action-ink: #f6f6f1;
+  --p-inv-bg: #183e32;
+  --p-inv-surface: #22493c;
+  --p-inv-ink: #f6f6f1;
+  --p-inv-muted: #c5d3c9;
+  --p-inv-accent: #f6f6f1;
+  --p-inv-accent-ink: #183e32;
+  --p-inv-action: #f6f6f1;
+  --p-inv-action-ink: #183e32;
+  --p-teja: #c2601b;
+  --p-error: #a3321f;
+  --font-display: var(--font-newsreader), Georgia, serif;
+  --font-text: var(--font-hanken), system-ui, sans-serif;
+  --display-weight: 400;
+  --display-tracking: -0.018em;
+  --display-tracking-xl: -0.025em;
+  --ly-scale: 1.06;
+}
+
+.sr-only,
+.visually-hidden {
+  position: absolute;
+  clip-path: inset(50%);
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
+
+.nav__logo img {
+  height: 44px;
+  width: auto;
+}
+@media (max-width: 639px) {
+  .nav__logo img {
+    height: 38px;
+  }
+}
+
+.nav__sheet {
+  position: fixed;
+  inset: var(--nav) 0 0 0;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  max-height: none;
+  border: 0;
+  border-top: 1px solid var(--line);
+  padding: var(--s-4) var(--gut) calc(var(--s-6) + env(safe-area-inset-bottom));
+  background: var(--bg);
+  color: var(--ink);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.nav__sheet:popover-open {
+  display: grid;
+  align-content: start;
+  gap: var(--s-6);
+}
+.nav__sheet::backdrop {
+  background: transparent;
+}
+.nav__sheet ul {
+  display: grid;
+}
+.nav__sheet li {
+  border-bottom: 1px solid var(--line);
+}
+.nav__sheet a:not(.btn) {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  font-size: 22px;
+  font-weight: 500;
+}
+.nav__sheet a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+}
+.nav__sheet .btn {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .actionbar {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 40;
+    display: block;
+    transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s;
+  }
+  .actionbar .btn {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border-radius: 999px;
+    box-shadow: 0 10px 28px rgb(24 62 50 / 0.3);
+  }
+  .actionbar .btn span {
+    position: absolute;
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .actionbar[data-bar="hidden"] {
+    opacity: 0;
+    transform: translateY(12px);
+    visibility: hidden;
+    transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s 200ms;
+  }
+}
+
+.icono-wa {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.actionbar .icono-wa {
+  width: 24px;
+  height: 24px;
+}
+@media (min-width: 640px) {
+  .actionbar .icono-wa {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.field :is(input, select, textarea) {
+  font: inherit;
+  font-size: max(1rem, 1em);
+}
+.field :is(input, select, textarea):user-invalid,
+.field :is(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--p-error);
+  box-shadow: inset 0 0 0 1px var(--p-error);
+}
+.field-error {
+  color: var(--p-error);
+  font-size: var(--t-small);
+  font-weight: 500;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(.morph) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
