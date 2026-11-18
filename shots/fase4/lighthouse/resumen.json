@@ -1,0 +1,32 @@
+[
+  {
+    "ruta": "/",
+    "perf": 84,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "4.5 s",
+    "cls": "0",
+    "tbt": "20 ms"
+  },
+  {
+    "ruta": "/propiedades/casa-campestre-cajica",
+    "perf": 92,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "3.4 s",
+    "cls": "0",
+    "tbt": "10 ms"
+  },
+  {
+    "ruta": "/contacto",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "0.8 s",
+    "cls": "0",
+    "tbt": "10 ms"
+  }
+]

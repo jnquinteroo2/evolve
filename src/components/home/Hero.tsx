@@ -11,16 +11,16 @@ export function Hero({ foto, alt, total, ciudades }: Props) {
       <div className="wrap">
         <div className="hero-text">
           <div className="hero__text">
-            <h1 id="hero-h">Inmuebles en la sabana de Bogotá</h1>
+            <h1 id="hero-h">Casas y bodegas en la sabana</h1>
             <p className="hero__lead">
-              Casas, bodegas, lotes y edificios en venta y arriendo, desde Funza. {total} inmuebles publicados en {ciudades} ciudades, con fotos reales.
+              Venta y arriendo de casas, bodegas, lotes y edificios en la sabana de Bogotá, desde Funza. {total} inmuebles publicados en {ciudades} ciudades, con fotos reales.
             </p>
-            <search className="hero__buscar">
+            <search className="hero__buscar grid gap-2">
+              <label htmlFor="hero-q" className="text-sm font-medium">
+                Buscar por ciudad, tipo o característica
+              </label>
               <form action="/propiedades" method="get" className="flex gap-2">
-                <label htmlFor="hero-q" className="visually-hidden">
-                  Buscar por ciudad, tipo o característica
-                </label>
-                <input
+                                <input
                   id="hero-q"
                   name="q"
                   type="search"

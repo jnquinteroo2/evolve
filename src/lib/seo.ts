@@ -54,10 +54,10 @@ export function jsonLdPropiedad(p: Propiedad) {
   };
 }
 
-export function metadatosPagina({ titulo, descripcion, ruta, imagen }: { titulo: string; descripcion: string; ruta: string; imagen?: { url: string; alt: string } }): Metadata {
+export function metadatosPagina({ titulo, descripcion, ruta, imagen, absoluto = false }: { titulo: string; descripcion: string; ruta: string; imagen?: { url: string; alt: string }; absoluto?: boolean }): Metadata {
   const img = imagen ? [{ url: absoluta(imagen.url), width: 1200, height: 630, alt: imagen.alt }] : undefined;
   return {
-    title: titulo,
+    title: absoluto ? { absolute: titulo } : titulo,
     description: descripcion,
     alternates: { canonical: ruta },
     openGraph: { title: titulo, description: descripcion, url: ruta, images: img, type: "website", locale: "es_CO", siteName: sitio.nombre },

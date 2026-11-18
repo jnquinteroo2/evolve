@@ -30,7 +30,7 @@ export const viewport: Viewport = {
 };
 
 const scriptEntrada =
-  "document.documentElement.classList.add('m-enter','mo-js');setTimeout(function(){document.documentElement.classList.add('m-enter-done')},700);setTimeout(function(){document.documentElement.classList.add('mo-safe')},2500)";
+  "var l=document.createElement('link');l.rel='stylesheet';l.href='/kit/motion/motion.css';document.head.appendChild(l);document.documentElement.classList.add('m-enter','mo-js');setTimeout(function(){document.documentElement.classList.add('m-enter-done')},700);setTimeout(function(){document.documentElement.classList.add('mo-safe')},2500)";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

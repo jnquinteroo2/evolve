@@ -127,6 +127,9 @@ export default async function Ficha({ params }: PageProps<"/propiedades/[slug]">
                       {p.precio ? "Escríbenos para agendar la visita o pedir más fotos." : "Pregúntanos el precio y las condiciones por WhatsApp."}
                     </p>
                     <BotonWhatsApp mensaje={mensaje} principal className="w-full" />
+                    <Link href={`/contacto?inmueble=${encodeURIComponent(p.titulo)}`} className="link ficha__alterna">
+                      Prefiero dejar mis datos
+                    </Link>
                   </>
                 )}
               </div>

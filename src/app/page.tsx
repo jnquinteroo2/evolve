@@ -13,6 +13,7 @@ export const metadata = metadatosPagina({
   titulo: "Evolve | Casas, bodegas y lotes en la sabana de Bogotá",
   descripcion: `Inmobiliaria y constructora en Funza. ${disponibles.length} inmuebles en venta y arriendo en Cota, Cajicá, Funza, Bogotá, Girardot y Santa Marta, con fotos reales y atención por WhatsApp.`,
   ruta: "/",
+  absoluto: true,
   imagen: { url: urlFotoAbsoluta(cota.fotos[0]), alt: cota.altFotos[0] },
 });
 

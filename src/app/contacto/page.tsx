@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { FormularioContacto } from "@/components/forms/FormularioContacto";
 import { BotonWhatsApp } from "@/components/site/BotonWhatsApp";
 import { sitio } from "@/lib/sitio";
@@ -42,9 +41,7 @@ export default function PaginaContacto() {
             </div>
           </dl>
         </div>
-        <Suspense fallback={null}>
           <FormularioContacto />
-        </Suspense>
         </div>
       </div>
     </section>

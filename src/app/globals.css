@@ -1,9 +1,8 @@
-@layer theme, base, kit, kit-layout, kit-motion, components, utilities;
+@layer theme, base, kit, kit-layout, components, utilities;
 
 @import "tailwindcss";
 @import "../kit/system.css" layer(kit);
 @import "../kit/layout.css" layer(kit-layout);
-@import "../kit/motion.css" layer(kit-motion);
 
 @theme inline {
   --color-bg: var(--bg);
@@ -133,19 +132,7 @@
     transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s;
   }
   .actionbar .btn {
-    width: 60px;
-    height: 60px;
-    padding: 0;
-    border-radius: 999px;
-    box-shadow: 0 10px 28px rgb(24 62 50 / 0.3);
-  }
-  .actionbar .btn span {
-    position: absolute;
-    clip-path: inset(50%);
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    white-space: nowrap;
+    box-shadow: 0 10px 28px rgb(24 62 50 / 0.28);
   }
   .actionbar[data-bar="hidden"] {
     opacity: 0;
@@ -160,16 +147,8 @@
   height: 20px;
   flex: none;
 }
-.actionbar .icono-wa {
-  width: 24px;
-  height: 24px;
-}
-@media (min-width: 640px) {
-  .actionbar .icono-wa {
-    width: 28px;
-    height: 28px;
-  }
-}
+
+
 
 .field :is(input, select, textarea) {
   font: inherit;
@@ -262,7 +241,7 @@ dialog::backdrop {
   .tarjeta__cuerpo {
     display: grid;
     gap: var(--s-2);
-    padding: var(--s-5);
+    padding: var(--s-4) var(--s-5) var(--s-5);
   }
   .tarjeta__tipo,
   .ficha__tipo {
@@ -713,41 +692,23 @@ main > section.libre > .wrap {
       grid-template-columns: 1fr;
     }
     .destacadas__lista .tarjeta {
-      grid-template-columns: 2fr 3fr;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     }
     .destacadas__lista .tarjeta__foto {
       aspect-ratio: auto;
-      min-height: 100%;
+      min-height: 220px;
     }
   }
   @media (max-width: 639px) {
     .destacadas__lista .tarjeta {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
     .destacadas__lista .tarjeta__foto {
       aspect-ratio: 16 / 10;
+      min-height: 0;
     }
     .destacadas__lista .tarjeta__datos {
       display: none;
-    }
-  }
-  .servicios__rejilla {
-    display: grid;
-    gap: var(--s-7) var(--gutter);
-    grid-template-columns: 5fr 4fr 3fr;
-    align-items: start;
-  }
-  @media (max-width: 1023px) {
-    .servicios__rejilla {
-      grid-template-columns: 1fr 1fr;
-    }
-    .servicios__foto {
-      grid-column: 1 / -1;
-    }
-  }
-  @media (max-width: 639px) {
-    .servicios__rejilla {
-      grid-template-columns: 1fr;
     }
   }
   .servicios__foto,
@@ -763,29 +724,20 @@ main > section.libre > .wrap {
   }
   .servicios__titulo {
     font-size: var(--t-card);
-    margin-bottom: var(--s-4);
+    margin-bottom: var(--s-2);
   }
   .lista-servicios li {
-    padding: 12px 0;
+    padding: 9px 0;
     border-bottom: 1px solid var(--line);
   }
-  .pilares__rejilla {
-    display: grid;
-    gap: var(--s-7) var(--gutter);
-    grid-template-columns: 6fr 5fr;
-    align-items: start;
-  }
   @media (max-width: 1023px) {
-    .pilares__rejilla {
-      grid-template-columns: 1fr;
-    }
     .pilares__foto {
       aspect-ratio: 16 / 9;
     }
   }
   .pilares__lista {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--s-5) var(--gutter);
   }
   @media (max-width: 639px) {
@@ -798,7 +750,7 @@ main > section.libre > .wrap {
     font-size: var(--t-card);
   }
   .pilares__lista dd {
-    color: var(--muted);
+    color: var(--ink);
     margin-top: var(--s-1);
   }
   .pilares__enlace {
@@ -837,7 +789,7 @@ main > section.libre > .wrap {
     font-size: 18px;
   }
   .servicios-pagina__lista dd {
-    color: var(--muted);
+    color: var(--ink);
   }
   .pagina-simple__accion {
     display: grid;
@@ -972,5 +924,62 @@ main > section.libre > .wrap {
   }
   .contacto__form .btn {
     justify-self: start;
+  }
+}
+.ficha__alterna {
+  justify-self: center;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--t-small);
+}
+.servicios__listas {
+  display: grid;
+  gap: var(--s-5);
+}
+.servicios__foto {
+  aspect-ratio: 4 / 3;
+}
+@media (min-width: 1024px) {
+  #destacadas .tarjeta__foto {
+    aspect-ratio: 16 / 10;
+  }
+}
+:is(.start-1, .start-2, .start-3, .start-4, .start-5, .start-6, .start-7, .start-8, .start-9, .start-10, .start-11, .start-12) {
+  inset-inline-start: auto;
+}
+main > section > .wrap,
+footer.closing > .wrap {
+  grid-template-columns: minmax(0, 1fr);
+}
+#destacadas .tarjeta__datos {
+  display: none;
+}
+.pilares__foto {
+  aspect-ratio: 4 / 5;
+}
+@media (max-width: 1023px) {
+  .pilares__foto {
+    aspect-ratio: 4 / 5;
+  }
+}
+@media (max-width: 399px) {
+  .nav:not(.is-open) .nav__actions {
+    display: none;
+  }
+  .nav__toggle {
+    margin-left: auto;
+  }
+}
+@media (max-width: 639px) {
+  #nosotros .pilares__foto {
+    aspect-ratio: 16 / 9;
+  }
+  #nosotros .pilares__lista dd {
+    display: none;
+  }
+  #nosotros .pilares__lista {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-3) var(--gutter);
   }
 }

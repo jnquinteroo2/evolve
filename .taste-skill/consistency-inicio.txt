@@ -1,0 +1,192 @@
+consistency  /Users/nicolas/Desktop/Desarrollos/Evolve/out/index.html
+--quick: not checked: scroll-linked (stepping), scroll-reveal (the reveal walk; IntersectionObserver reveals are read), hover-spill, hidden-visual, loop-pause, forms, reduced-motion, the dead-IntersectionObserver walk (hidden content is read with scripts off and under reduced motion), hover-move. Still told: IntersectionObserver reveals (scroll-reveal), held sections (pinned) and CSS scroll timelines (scroll-linked); faults inside held or [data-big-scene] sections are WARNs
+
+1440x900  11 screens, 1 held section  2 FAIL  29 WARN
+  FAIL phone-number    div.grid > div.span-4.start-9 > ul > li:nth-of-type(1)  "311 524 4288"
+       a phone number after its label: "311 524 4288"; a visitor can dial it and reach a stranger  [1440-20-phone-number.jpg]
+       fix: drop the number and its tel: link (a "Request a call" form may stand in), unless the brief gives the number
+  FAIL phone-number    header.nav.nav--centre > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary  "https://wa.me/573115244288?text=Hola%2C%"
+       a WhatsApp link calls a number in a real dialable format: "https://wa.me/573115244288?text=Hola%2C%"; a visitor can dial it and reach a stranger (and 6 more like it: div.hero-text > div.hero__text > div.btn-row > a.btn.btn--primary, footer#contacto-final > div.wrap > div.closing__cta.close--type > a.btn.btn--primary, div.span-4.start-9 > ul > li:nth-of-type(1) > a, ...)  [1440-01-phone-number.jpg]
+       fix: drop the number and its tel: link (a "Request a call" form may stand in), unless the brief gives the number
+  WARN assets          (the page)
+       the data file propiedades did not load (404)
+       fix: fix the path, or remove the reference
+  WARN assets          (the page)
+       the data file servicios did not load (404)
+       fix: fix the path, or remove the reference
+  WARN assets          (the page)
+       the data file nosotros did not load (404)
+       fix: fix the path, or remove the reference
+  WARN assets          (the page)
+       the data file contacto did not load (404)
+       fix: fix the path, or remove the reference
+  WARN assets          (the page)
+       the data file propiedades/apartamento-kuali-santa-marta did not load (404)
+       fix: fix the path, or remove the reference
+  WARN assets          (the page)
+       the data file propiedades/edificio-multifamiliar-usaquen did not load (404)
+       fix: fix the path, or remove the reference
+  WARN assets          (the page)
+       the data file propiedades/bodega-parque-industrial-aepi-cota did not load (404)
+       fix: fix the path, or remove the reference
+  WARN assets          (the page)
+       the data file propiedades/casa-campestre-cota-el-abra did not load (404)
+       fix: fix the path, or remove the reference
+  WARN scroll-reveal   section#recorrido  "Recorrido por la casa de la vereda El Ab"
+       starts "opacity" (0.4 s) the moment it is scrolled into view (an IntersectionObserver) on div.mo-ph__words (inside a dealt moment's section, [data-moment]: an enter moment is expected on every kind; its still is judged under reduced motion)  [1440-14-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  WARN pinned          section#recorrido > div.wrap.mo-ph  "Recorrido por la casa de la vereda El Ab"
+       held on screen for 3 screens of scroll (position: sticky) while the page moves on (inside a dealt moment's section, [data-moment]: expected on every kind, two moments at most, house rule; its still is judged under reduced motion)  [1440-21-pinned.jpg]
+       fix: let the section scroll with the page
+  WARN no-visual       section#servicios  "Venta, arriendo, avalúos y obras en la s"
+       pictures, effects and mocks cover 22% of this section; a feature section needs a visual (about 25% or more)  [1440-15-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  WARN copy-headings   div.grid.grid--top > div.span-6.servicios__listas > div:nth-of-type(2) > h3.servicios__titulo  "Construcción e interventoría de obras"
+       "Construcción e interventoría de obras" names no product, part, place or section (the one brand line a page may have)  [1440-16-copy-headings.jpg]
+       fix: name the thing in every heading: the product, a part, the place or a section noun
+  WARN copy-buttons    header.nav.nav--centre > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary  "Escribir por WhatsApp"
+       "Escribir por WhatsApp" does not start with a verb (book, buy, try, start, get, see...) (and 1 more like it: "Buscar")  [1440-02-copy-buttons.jpg]
+       fix: label buttons with a verb and what the visitor gets ("Book a room", "Start free trial")
+  WARN section-gaps    main#contenido > section.hero.hero--photo / section#destacadas
+       122px between these sections, -36% against the median 191px  [1440-08-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN section-gaps    section#nosotros / footer#contacto-final
+       253px between these sections, +32% against the median 191px  [1440-19-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN section-gaps    section#recorrido / section#servicios
+       uneven space at the edge of a band: 32px outside its edge, 122px inside it (the space on either side of a change of ground reads as one gap only when the two match)  [1440-17-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN links           div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(1) > a.nav__link  "Propiedades"
+       "Propiedades" goes to /propiedades, which does not exist here  [1440-03-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN links           div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(2) > a.nav__link  "Servicios"
+       "Servicios" goes to /servicios, which does not exist here  [1440-04-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN links           div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(3) > a.nav__link  "Nosotros"
+       "Nosotros" goes to /nosotros, which does not exist here  [1440-05-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN links           div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(4) > a.nav__link  "Contacto"
+       "Contacto" goes to /contacto, which does not exist here  [1440-06-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN links           div.wrap > ul.destacadas__lista > li:nth-of-type(1) > a.card.tarjeta  "Venta · Apartamento Apartamento esquiner"
+       "Venta · Apartamento Apartamento esquiner" goes to /propiedades/apartamento-kuali-santa-marta, which does not exist here  [1440-09-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN links           div.wrap > ul.destacadas__lista > li:nth-of-type(2) > a.card.tarjeta  "Venta · Edificio Edificio de seis aparta"
+       "Venta · Edificio Edificio de seis aparta" goes to /propiedades/edificio-multifamiliar-usaquen, which does not exist here  [1440-10-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN links           div.wrap > ul.destacadas__lista > li:nth-of-type(3) > a.card.tarjeta  "Venta · Bodega Bodega No. 2 en el Parque"
+       "Venta · Bodega Bodega No. 2 en el Parque" goes to /propiedades/bodega-parque-industrial-aepi-cota, which does not exist here  [1440-11-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN links           div.wrap.mo-ph > div.mo-ph__head > p > a.link  "Ver la ficha completa"
+       "Ver la ficha completa" goes to /propiedades/casa-campestre-cota-el-abra, which does not exist here  [1440-13-links.jpg]
+       fix: point every link at a real section, page or file
+  WARN photo-set       li:nth-of-type(1) > a.card.tarjeta > div.tarjeta__foto.m-zoom > img.frame__img  "01-640.webp"
+       9 photographs in more than one look: warm and cool photographs mixed (b* -16 to +7); the odd one out is 01-640.webp  [1440-12-photo-set.jpg]
+       fix: grade the photographs to one look (light, colour, warmth), or replace the odd one out
+  WARN nav-labels      header.nav.nav--centre > div.wrap.nav__bar > a.skip-link  "Saltar al contenido"
+       "Saltar al contenido" opens a section headed "Casas y bodegas en la sabana"
+       fix: name each nav link after the heading of the section it opens
+  WARN stranded-action section#servicios > div.wrap > div.section-head.section-head--row > a.btn.btn--secondary  "Ver los servicios"
+       stands 352px across from the nearest text of its block ("Venta, arriendo, avalúos y obr")  [1440-18-stranded-action.jpg]
+       fix: put the button under or beside the text it belongs to
+  WARN action-repeat   header.nav.nav--centre > div.wrap.nav__bar:nth-of-type(1) > div.nav__actions > a.btn.btn--primary  "escribir por whatsapp"
+       "escribir por whatsapp" shows 2 times on the first screen at 1440px (nav, hero): the nav's button and the hero's; nothing else on the screen may repeat it  [1440-22-action-repeat.jpg]
+       fix: show the action once a screen besides the nav's button: the hero's, the close's or the phone bar's, never all at once
+  WARN form-fields     div.hero-text > div.hero__text > search.hero__buscar.grid > form.flex.gap-2
+       the form has no status line (role="status"): sending, sent and errors are never read out  [1440-07-form-fields.jpg]
+       fix: give each field its type, autocomplete and inputmode, never block paste or disable the button before a submit, and add the status line (references/system.md, Forms)
+
+390x844  16 screens, 1 held section  2 FAIL  10 WARN
+  FAIL section-gaps    main#contenido > section.hero.hero--photo / section#destacadas
+       642px between these sections, +113% against the median 302px  [390-02-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  FAIL section-gaps    section#recorrido / section#servicios
+       505px between these sections, +67% against the median 302px of gaps at a change of ground  [390-12-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN nav             header.nav.nav--centre > div.wrap.nav__bar > button.nav__toggle
+       the nav is lopsided: its last item ends 13px inside the content's edge (366px), while its first starts on the other edge  [390-01-nav.jpg]
+       fix: start the nav's first item and end its last on the content's two edges
+  WARN scroll-reveal   section#recorrido  "Recorrido por la casa de la vereda El Ab"
+       starts "opacity" (0.4 s) the moment it is scrolled into view (an IntersectionObserver) on div.mo-ph__words (inside a dealt moment's section, [data-moment]: an enter moment is expected on every kind; its still is judged under reduced motion)  [390-06-scroll-reveal.jpg]
+       fix: show it at rest: no fade, rise or unmask when it is scrolled into view
+  WARN pinned          section#recorrido > div.wrap.mo-ph  "Recorrido por la casa de la vereda El Ab"
+       held on screen for 3 screens of scroll (position: sticky) while the page moves on (inside a dealt moment's section, [data-moment]: expected on every kind, two moments at most, house rule; its still is judged under reduced motion)  [390-11-pinned.jpg]
+       fix: let the section scroll with the page
+  WARN no-visual       section#servicios  "Venta, arriendo, avalúos y obras en la s"
+       pictures, effects and mocks cover 16% of this section; a feature section needs a visual (about 25% or more)  [390-08-no-visual.jpg]
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  WARN section-gaps    section#destacadas / section#recorrido
+       201px between these sections, -33% against the median 302px  [390-05-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN section-gaps    section#servicios / section#nosotros
+       209px between these sections, -31% against the median 302px of gaps at a change of ground  [390-10-section-gaps.jpg]
+       fix: use one gap between sections (all within 25% of each other)
+  WARN photo-set       li:nth-of-type(1) > a.card.tarjeta > div.tarjeta__foto.m-zoom > img.frame__img  "01-640.webp"
+       10 photographs in more than one look: warm and cool photographs mixed (b* -16 to +15); the odd one out is 01-640.webp  [390-04-photo-set.jpg]
+       fix: grade the photographs to one look (light, colour, warmth), or replace the odd one out
+  WARN stranded-action section#servicios > div.wrap > div.section-head.section-head--row > a.btn.btn--secondary  "Ver los servicios"
+       stands 336px down from the nearest text of its block ("Venta, arriendo, avalúos y obr")  [390-09-stranded-action.jpg]
+       fix: put the button under or beside the text it belongs to
+  WARN empty-area      section#destacadas  "Un apartamento, un edificio y una bodega"
+       41% of the section is empty: 496px above its first content, 656px of empty rows between its content, in its 2774px of rows (WARN over 35%, FAIL over 50%)  [390-03-empty-area.jpg]
+       fix: fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)
+  WARN empty-area      section#servicios  "Venta, arriendo, avalúos y obras en la s"
+       43% of the section is empty: 288px above its first content, 480px of empty rows between its content, in its 1798px of rows (WARN over 35%, FAIL over 50%)  [390-07-empty-area.jpg]
+       fix: fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)
+
+first screen at 1280, 1152, 1024, 896, 768  0 FAIL  0 WARN
+
+the page at 320x640, walked for what runs past the screen's edge  0 FAIL
+
+checks
+  WARN assets                 PASS shader-lint            PASS gl-fallback            
+  PASS empty-visual           PASS hero-fill              PASS flush                  
+  PASS placeholder            PASS sample-label           PASS caption                
+  PASS credit-wall            WARN nav                    PASS nav-covers             
+  PASS spill                  PASS off-viewport           PASS fold-card              
+  SKIP hover-spill            PASS overlap-text           PASS collide                
+  PASS tap-size               PASS row-gap                PASS cut-text               
+  PASS fold-cut               PASS marquee                SKIP scroll-linked          
+  WARN scroll-reveal          WARN pinned                 SKIP loop-pause             
+  SKIP reduced-motion         PASS hidden-content         PASS webgl                  
+  WARN no-visual              PASS text-only              PASS card-visual            
+  SKIP hidden-visual          PASS card-family            PASS card-layout            
+  PASS nesting                PASS effect-repeat          PASS ui-fit                 
+  PASS ui-centre              PASS dark-ground            PASS button-styles          
+  PASS button-shape           PASS same-action            PASS button-picture         
+  PASS cta                    PASS pricing-tiers          PASS copy-headline          
+  PASS copy-fact              WARN copy-headings          WARN copy-buttons           
+  PASS copy-actions           PASS heading-scale          PASS stagger                
+  PASS top-stagger            PASS off-grid               PASS col-edge               
+  PASS right-edge             PASS centre-axis            PASS tilt                   
+  PASS contrast               PASS text-contrast          PASS body-size              
+  PASS busy-ground            FAIL section-gaps           PASS proximity              
+  PASS hole                   WARN links                  SKIP forms                  
+  PASS photo-upscale          WARN photo-set              PASS photo-credit           
+  PASS nav-family             WARN nav-labels             PASS link-styles            
+  PASS heading-align          PASS label-centre           PASS fake-button            
+  WARN stranded-action        PASS orphan                 PASS unit-break             
+  PASS tab-wrap               PASS effects-fit            PASS fade-cut               
+  PASS photo-weight           PASS copy-length            PASS nav-current            
+  PASS progress-bar           PASS photo-repeat           PASS button-contrast        
+  PASS photo-print            PASS grounds                PASS split-align            
+  PASS fact-agree             PASS fold-action            PASS action-count           
+  PASS one-screen             SKIP hover                  SKIP hover-move             
+  PASS product-shown          PASS same-object            PASS font-load              
+  PASS visual-caption         PASS visual-empty           PASS effect-kind            
+  PASS hero-enter             PASS moment-none            PASS street-number          
+  PASS postcode               PASS coordinates            PASS company-number         
+  FAIL phone-number           PASS hero-screen            PASS section-height         
+  PASS section-air            PASS one-section            PASS one-heading            
+  PASS container-edges        PASS row-lines              PASS split-pair             
+  PASS motion-layer           PASS count-text             PASS loop-cycle             
+  PASS section-tile           WARN empty-area             PASS a11y-name              
+  PASS img-alt                PASS field-label            PASS heading-order          
+  PASS tabindex               PASS focus-ring             PASS focus-visible          
+  PASS focus-hidden           PASS skip-link              PASS menu-toggle            
+  PASS lang                   PASS page-meta              PASS share-meta             
+  WARN action-repeat          PASS map-link               PASS open-now               
+  PASS assumed                PASS run-on                 WARN form-fields            
+  PASS form-send              
+
+total  4 FAIL  39 WARN  (crops and report.json in /Users/nicolas/Desktop/Desarrollos/Evolve/out/.taste-skill/consistency)

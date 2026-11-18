@@ -1,7 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useRef, useState, type FocusEvent, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { formularioDestino, sitio } from "@/lib/sitio";
 
 const intereses = ["Comprar", "Arrendar", "Vender o arrendar mi inmueble", "Servicios de construcción", "Otro"];
@@ -17,10 +16,15 @@ const mensajesError: Record<string, string> = {
 type Estado = "listo" | "enviando" | "enviado" | "error";
 
 export function FormularioContacto() {
-  const params = useSearchParams();
   const form = useRef<HTMLFormElement>(null);
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [estado, setEstado] = useState<Estado>("listo");
+
+  useEffect(() => {
+    const valor = new URLSearchParams(window.location.search).get("inmueble");
+    const campo = form.current?.querySelector<HTMLInputElement>("#inmueble");
+    if (valor && campo && !campo.value) campo.value = valor;
+  }, []);
 
   function validar(el: HTMLInputElement | HTMLTextAreaElement) {
     const msg = el.validity.valid ? "" : mensajesError[el.name] ?? "Revisa este campo.";
@@ -71,7 +75,6 @@ export function FormularioContacto() {
   }
 
   const err = (n: string) => (errores[n] ? { "aria-invalid": true as const, "aria-describedby": `${n}-error` } : {});
-  const inmueble = params.get("inmueble") ?? "";
 
   return (
     <form ref={form} className="contacto__form" onSubmit={enviar} onBlur={alSalir} onInput={alEscribir} noValidate aria-labelledby="form-h">
@@ -114,7 +117,7 @@ export function FormularioContacto() {
       </fieldset>
       <div className="field">
         <label htmlFor="inmueble">Inmueble o zona de interés (opcional)</label>
-        <input id="inmueble" name="inmueble" defaultValue={inmueble} autoComplete="off" />
+        <input id="inmueble" name="inmueble" autoComplete="off" />
       </div>
       <div className="field">
         <label htmlFor="mensaje">Mensaje</label>

@@ -5,10 +5,10 @@ import { pilares } from "@/lib/contenido";
 
 export function Pilares({ foto, alt }: { foto: TFoto; alt: string }) {
   return (
-    <section className="section g2m" id="nosotros" aria-labelledby="pilares-h">
+    <section className="section" id="nosotros" aria-labelledby="pilares-h">
       <div className="wrap">
-        <div className="pilares__rejilla">
-          <div className="pilares__texto">
+        <div className="grid grid--top">
+          <div className="span-6 pilares__texto">
             <div className="section-head">
               <h2 id="pilares-h">Desde Funza, para la sabana y sus municipios</h2>
               <p>Atendemos proyectos residenciales, comerciales e industriales en Funza, Bogotá y los municipios cercanos.</p>
@@ -25,7 +25,7 @@ export function Pilares({ foto, alt }: { foto: TFoto; alt: string }) {
               Conocer a Evolve
             </Link>
           </div>
-          <div className="pilares__foto frame frame--photo">
+          <div className="span-5 start-8 pilares__foto frame frame--photo">
             <Foto foto={foto} alt={alt} sizes="(min-width: 1024px) 560px, 100vw" className="frame__img" />
           </div>
         </div>

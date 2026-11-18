@@ -16,18 +16,27 @@ export function BarraAccion() {
     const marca = document.querySelector<HTMLElement>("[data-barra]");
     const mensaje = marca?.dataset.barraMensaje;
     const oculta = marca?.dataset.barra === "oculta";
-    const visibles = new Set<Element>();
-    const io = new IntersectionObserver((entradas) => {
-      for (const e of entradas) {
-        if (e.isIntersecting) visibles.add(e.target);
-        else visibles.delete(e.target);
-      }
-      setEstado({ visible: visibles.size === 0, mensaje, oculta });
-    });
-    const objetivos = document.querySelectorAll("main [data-accion-principal], footer [data-accion-principal]");
-    objetivos.forEach((o) => io.observe(o));
-    if (!objetivos.length) requestAnimationFrame(() => setEstado({ visible: true, mensaje, oculta }));
-    return () => io.disconnect();
+    const objetivos = [...document.querySelectorAll<HTMLElement>("main [data-accion-principal], footer [data-accion-principal]")];
+    let marco = 0;
+    const revisar = () => {
+      cancelAnimationFrame(marco);
+      marco = requestAnimationFrame(() => {
+        const alto = window.innerHeight;
+        const enPantalla = objetivos.some((o) => {
+          const r = o.getBoundingClientRect();
+          return r.bottom > 0 && r.top < alto && r.width > 0;
+        });
+        setEstado({ visible: !enPantalla, mensaje, oculta });
+      });
+    };
+    revisar();
+    window.addEventListener("scroll", revisar, { passive: true });
+    window.addEventListener("resize", revisar, { passive: true });
+    return () => {
+      cancelAnimationFrame(marco);
+      window.removeEventListener("scroll", revisar);
+      window.removeEventListener("resize", revisar);
+    };
   }, [ruta]);
 
   const mostrar = estado.visible && !estado.oculta;

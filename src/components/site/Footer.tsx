@@ -28,7 +28,9 @@ export function Footer() {
               <ul>
                 {navegacion.map((n) => (
                   <li key={n.href}>
-                    <Link href={n.href}>{n.texto}</Link>
+                    <Link href={n.href} prefetch={false}>
+                      {n.texto}
+                    </Link>
                   </li>
                 ))}
               </ul>

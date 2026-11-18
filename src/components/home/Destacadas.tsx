@@ -8,8 +8,8 @@ export function Destacadas({ lista, total }: { lista: Propiedad[]; total: number
       <div className="wrap">
         <div className="section-head section-head--row">
           <div>
-            <h2 id="destacadas-h">Tres inmuebles para ver primero</h2>
-            <p>Un apartamento frente al mar, un edificio que ya genera renta y una bodega de 2.646 m² en Cota.</p>
+            <h2 id="destacadas-h">Un apartamento, un edificio y una bodega</h2>
+            <p>Frente al mar en Santa Marta, con renta en Usaquén y con 2.646 m² en Cota.</p>
           </div>
           <Link href="/propiedades" className="btn btn--secondary">
             Ver las {total} propiedades
@@ -18,7 +18,7 @@ export function Destacadas({ lista, total }: { lista: Propiedad[]; total: number
         <ul className="destacadas__lista">
           {lista.map((p) => (
             <li key={p.slug}>
-              <Tarjeta p={p} />
+              <Tarjeta p={p} sizes="(min-width: 1024px) 620px, (min-width: 640px) 40vw, 100vw" />
             </li>
           ))}
         </ul>

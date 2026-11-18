@@ -9,19 +9,16 @@ export function Servicios({ foto, alt }: { foto: TFoto; alt: string }) {
       <div className="wrap">
         <div className="section-head section-head--row">
           <div>
-            <h2 id="servicios-h">Inmobiliaria y constructora en una sola firma</h2>
-            <p>Vendemos, arrendamos y gestionamos inmuebles, y acompañamos obras desde la consultoría hasta la construcción.</p>
+            <h2 id="servicios-h">Venta, arriendo, avalúos y obras en la sabana</h2>
           </div>
           <Link href="/servicios" className="btn btn--secondary">
             Ver los servicios
           </Link>
         </div>
-        <div className="servicios__rejilla">
-          <div className="servicios__foto frame frame--photo">
-            <Foto foto={foto} alt={alt} sizes="(min-width: 1024px) 520px, 100vw" className="frame__img" />
-          </div>
+        <div className="grid grid--top servicios__rejilla">
+          <div className="span-6 servicios__listas">
           <div>
-            <h3 className="servicios__titulo">Servicios inmobiliarios</h3>
+            <h3 className="servicios__titulo">Inmuebles: venta, arriendo y avalúos</h3>
             <ul className="lista-servicios">
               {serviciosInmobiliarios.map((s) => (
                 <li key={s.nombre}>{s.nombre}</li>
@@ -29,12 +26,16 @@ export function Servicios({ foto, alt }: { foto: TFoto; alt: string }) {
             </ul>
           </div>
           <div>
-            <h3 className="servicios__titulo">Servicios de construcción</h3>
+            <h3 className="servicios__titulo">Construcción e interventoría de obras</h3>
             <ul className="lista-servicios">
               {serviciosConstruccion.map((s) => (
                 <li key={s.nombre}>{s.nombre}</li>
               ))}
             </ul>
+          </div>
+          </div>
+          <div className="span-5 start-8 servicios__foto frame frame--photo">
+            <Foto foto={foto} alt={alt} sizes="(min-width: 1024px) 540px, 100vw" className="frame__img" />
           </div>
         </div>
       </div>

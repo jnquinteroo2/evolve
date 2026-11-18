@@ -6,7 +6,7 @@ import { nombreCategoria, nombreOperacion, textoPrecio, ubicacionCorta } from "@
 
 type Props = { p: Propiedad; nivel?: "h2" | "h3"; sizes?: string };
 
-export function Tarjeta({ p, nivel = "h3", sizes = "(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" }: Props) {
+export function Tarjeta({ p, nivel = "h3", sizes = "(min-width: 1024px) 560px, (min-width: 640px) 60vw, 100vw" }: Props) {
   const Titulo = nivel;
   const precio = textoPrecio(p.precio);
   const vendida = p.estado === "vendida";
