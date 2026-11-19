@@ -1,13 +1,13 @@
 "use client";
 
-import { ViewTransition, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Expand, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Foto } from "@/components/Foto";
 import type { Foto as TFoto } from "@/data/propiedades";
 
 type Props = { slug: string; titulo: string; fotos: TFoto[]; alts: string[] };
 
-export function Galeria({ slug, titulo, fotos, alts }: Props) {
+export function Galeria({ titulo, fotos, alts }: Props) {
   const dialogo = useRef<HTMLDialogElement>(null);
   const pista = useRef<HTMLDivElement>(null);
   const [actual, setActual] = useState(0);
@@ -66,14 +66,12 @@ export function Galeria({ slug, titulo, fotos, alts }: Props) {
           <button
             key={f.publicId}
             type="button"
-            className={`galeria__celda m-zoom ${i === 0 ? "galeria__celda--principal" : ""}`}
+            className={`galeria__celda ${i === 0 ? "galeria__celda--principal" : ""}`}
             onClick={() => abrir(i)}
             aria-label={`Ampliar foto ${i + 1} de ${total}: ${alts[i]}`}
           >
             {i === 0 ? (
-              <ViewTransition name={`foto-${slug}`} share="morph" default="none">
-                <Foto foto={f} alt={alts[i]} sizes="(min-width: 1024px) 760px, 100vw" prioridad className="frame__img" />
-              </ViewTransition>
+              <Foto foto={f} alt={alts[i]} sizes="(min-width: 1024px) 760px, 100vw" prioridad className="frame__img" />
             ) : (
               <Foto foto={f} alt={alts[i]} sizes="(min-width: 1024px) 380px, 50vw" className="frame__img" />
             )}

@@ -5,14 +5,19 @@ import { useDeferredValue, useMemo, useState } from "react";
 import type { Categoria, Operacion, Propiedad } from "@/data/propiedades";
 import { Tarjeta } from "@/components/propiedad/Tarjeta";
 import { BotonWhatsApp } from "@/components/site/BotonWhatsApp";
-import { aParams, filtrar, hayFiltros, leerFiltros, type Filtros } from "@/lib/filtros";
+import { aParams, filtrar, hayFiltros, leerFiltros, sinFiltros, type Filtros } from "@/lib/filtros";
+import { infoPerfil, perfiles } from "@/lib/perfiles";
 import { nombreCategoria, nombreOperacion, plural } from "@/lib/formato";
 
 type Props = { propiedades: Propiedad[]; operaciones: Operacion[]; tipos: Categoria[]; ciudades: string[] };
 
-export function Catalogo({ propiedades, operaciones, tipos, ciudades }: Props) {
+export function Catalogo(props: Props) {
   const params = useSearchParams();
-  const [f, setF] = useState<Filtros>(() => leerFiltros(new URLSearchParams(params.toString())));
+  return <CatalogoVista {...props} inicial={leerFiltros(new URLSearchParams(params.toString()))} />;
+}
+
+export function CatalogoVista({ propiedades, operaciones, tipos, ciudades, inicial }: Props & { inicial: Filtros }) {
+  const [f, setF] = useState<Filtros>(inicial);
   const diferido = useDeferredValue(f);
   const resultado = useMemo(() => filtrar(propiedades, diferido), [propiedades, diferido]);
   const disponibles = resultado.filter((p) => p.estado === "disponible").length;
@@ -46,6 +51,19 @@ export function Catalogo({ propiedades, operaciones, tipos, ciudades }: Props) {
               enterKeyHint="search"
             />
           </div>
+          <fieldset className="catalogo__grupo catalogo__grupo--perfil">
+            <legend>Busco</legend>
+            <div className="catalogo__chips">
+              <button type="button" className="chip" aria-pressed={f.perfil === null} onClick={() => actualizar({ perfil: null })}>
+                Todo
+              </button>
+              {perfiles.map((p) => (
+                <button key={p} type="button" className="chip" aria-pressed={f.perfil === p} onClick={() => actualizar({ perfil: f.perfil === p ? null : p })}>
+                  {infoPerfil[p].titulo}
+                </button>
+              ))}
+            </div>
+          </fieldset>
           <fieldset className="catalogo__grupo">
             <legend>Operación</legend>
             <div className="catalogo__chips">
@@ -89,7 +107,7 @@ export function Catalogo({ propiedades, operaciones, tipos, ciudades }: Props) {
             {resumen}
           </p>
           {hayFiltros(f) ? (
-            <button type="button" className="link" onClick={() => actualizar({ q: "", operacion: null, tipo: null, ciudad: null })}>
+            <button type="button" className="link" onClick={() => actualizar(sinFiltros)}>
               Quitar filtros
             </button>
           ) : null}
@@ -98,9 +116,9 @@ export function Catalogo({ propiedades, operaciones, tipos, ciudades }: Props) {
 
       {resultado.length ? (
         <ul className="catalogo__rejilla" aria-label="Inmuebles">
-          {resultado.map((p) => (
+          {resultado.map((p, i) => (
             <li key={p.slug}>
-              <Tarjeta p={p} nivel="h2" />
+              <Tarjeta p={p} nivel="h2" prioridad={i === 0} />
             </li>
           ))}
         </ul>
@@ -111,7 +129,7 @@ export function Catalogo({ propiedades, operaciones, tipos, ciudades }: Props) {
             Prueba quitando un filtro o buscando por ciudad. Si buscas algo puntual, escríbenos: también conseguimos inmuebles que todavía no están publicados.
           </p>
           <div className="btn-row">
-            <button type="button" className="btn btn--secondary" onClick={() => actualizar({ q: "", operacion: null, tipo: null, ciudad: null })}>
+            <button type="button" className="btn btn--secondary" onClick={() => actualizar(sinFiltros)}>
               Ver todos los inmuebles
             </button>
             <BotonWhatsApp mensaje={`Hola, busco un inmueble${f.q.trim() ? ` (${f.q.trim()})` : ""}. ¿Me ayudan?`} />

@@ -1,15 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Hanken_Grotesk, Newsreader } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BarraAccion } from "@/components/site/BarraAccion";
-import { KitRuntime } from "@/components/kit/KitRuntime";
 import { sitio } from "@/lib/sitio";
 import { jsonLdAgencia } from "@/lib/seo";
 
-const newsreader = Newsreader({ subsets: ["latin"], variable: "--font-newsreader", weight: "400", style: "normal", display: "swap" });
-const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
+const jakarta = localFont({
+  src: [
+    { path: "./fuentes/plus-jakarta-sans-latin-wght-normal.woff2", weight: "200 800", style: "normal" },
+    { path: "./fuentes/plus-jakarta-sans-latin-wght-italic.woff2", weight: "200 800", style: "italic" },
+  ],
+  variable: "--font-jakarta",
+  display: "swap",
+  fallback: ["system-ui", "Segoe UI", "Arial", "sans-serif"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(sitio.url),
@@ -23,22 +29,19 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#183e32",
+  themeColor: "#0f2e25",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
 };
 
-const scriptEntrada =
-  "var l=document.createElement('link');l.rel='stylesheet';l.href='/kit/motion/motion.css';document.head.appendChild(l);document.documentElement.classList.add('m-enter','mo-js');setTimeout(function(){document.documentElement.classList.add('m-enter-done')},700);setTimeout(function(){document.documentElement.classList.add('mo-safe')},2500)";
+const scriptJs = "document.documentElement.classList.add('js')";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-CO" data-type="service" data-radius="soft" data-buttons="solid" data-motion="" className={`${newsreader.variable} ${hanken.variable}`} suppressHydrationWarning>
+    <html lang="es-CO" data-type="service" data-radius="soft" data-buttons="solid" className={`${jakarta.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: scriptEntrada }} />
-        <link rel="modulepreload" href="/kit/moments/moments.js" />
-        <link rel="modulepreload" href="/kit/moments/lib.js" />
+        <script dangerouslySetInnerHTML={{ __html: scriptJs }} />
       </head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdAgencia()) }} />
@@ -46,7 +49,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main id="contenido">{children}</main>
         <Footer />
         <BarraAccion />
-        <KitRuntime />
       </body>
     </html>
   );

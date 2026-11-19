@@ -51,7 +51,7 @@ export default function PaginaNosotros() {
             </Link>
           </div>
         </div>
-        <figure className="nosotros__foto frame frame--photo" data-moment="picture-develops">
+        <figure className="nosotros__foto frame frame--photo">
           <Foto foto={cajica.fotos[0]} alt={cajica.altFotos[0]} sizes="(min-width: 1024px) 560px, 100vw" className="frame__img" prioridad />
         </figure>
         </div>

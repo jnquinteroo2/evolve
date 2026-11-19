@@ -1,42 +1,37 @@
 import Link from "next/link";
-import { Foto } from "@/components/Foto";
-import type { Foto as TFoto } from "@/data/propiedades";
 import { serviciosConstruccion, serviciosInmobiliarios } from "@/lib/contenido";
 
-export function Servicios({ foto, alt }: { foto: TFoto; alt: string }) {
+const grupos = [
+  { id: "inmobiliarios", titulo: "Servicios inmobiliarios", items: serviciosInmobiliarios },
+  { id: "construccion", titulo: "Servicios de construcción", items: serviciosConstruccion },
+];
+
+export function Servicios() {
   return (
-    <section className="section ground-inverse g2m" id="servicios" aria-labelledby="servicios-h">
+    <section className="section servicios libre" id="servicios" aria-labelledby="servicios-h">
       <div className="wrap">
         <div className="section-head section-head--row">
           <div>
-            <h2 id="servicios-h">Venta, arriendo, avalúos y obras en la sabana</h2>
+            <h2 id="servicios-h">Del avalúo a la obra, con un mismo equipo</h2>
           </div>
           <Link href="/servicios" className="btn btn--secondary">
             Ver los servicios
           </Link>
         </div>
-        <div className="grid grid--top servicios__rejilla">
-          <div className="span-6 servicios__listas">
-          <div>
-            <h3 className="servicios__titulo">Inmuebles: venta, arriendo y avalúos</h3>
-            <ul className="lista-servicios">
-              {serviciosInmobiliarios.map((s) => (
-                <li key={s.nombre}>{s.nombre}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="servicios__titulo">Construcción e interventoría de obras</h3>
-            <ul className="lista-servicios">
-              {serviciosConstruccion.map((s) => (
-                <li key={s.nombre}>{s.nombre}</li>
-              ))}
-            </ul>
-          </div>
-          </div>
-          <div className="span-5 start-8 servicios__foto frame frame--photo">
-            <Foto foto={foto} alt={alt} sizes="(min-width: 1024px) 540px, 100vw" className="frame__img" />
-          </div>
+        <div className="servicios__grid">
+          {grupos.map((g) => (
+            <article key={g.id} className="servicios__grupo" aria-labelledby={`sg-${g.id}`}>
+              <h3 id={`sg-${g.id}`}>{g.titulo}</h3>
+              <dl>
+                {g.items.map((s) => (
+                  <div key={s.nombre}>
+                    <dt>{s.nombre}</dt>
+                    <dd>{s.detalle}</dd>
+                  </div>
+                ))}
+              </dl>
+            </article>
+          ))}
         </div>
       </div>
     </section>

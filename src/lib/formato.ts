@@ -39,3 +39,7 @@ export function ubicacionLarga(p: Pick<Propiedad, "ciudad" | "sector" | "departa
 export function plural(n: number, uno: string, varios: string) {
   return `${n} ${n === 1 ? uno : varios}`;
 }
+
+export function listaNatural(items: string[]) {
+  return new Intl.ListFormat("es", { style: "long", type: "conjunction" }).format(items);
+}

@@ -10,6 +10,8 @@ import { nombreCategoria, nombreOperacion, textoPrecio, ubicacionLarga } from "@
 import { jsonLdPropiedad, metadatosPagina } from "@/lib/seo";
 import { urlFotoAbsoluta } from "@/lib/medios";
 import { mensajePropiedad } from "@/lib/whatsapp";
+import { Compartir } from "@/components/propiedad/Compartir";
+import { sitio } from "@/lib/sitio";
 
 export const dynamicParams = false;
 
@@ -37,20 +39,20 @@ export default async function Ficha({ params }: PageProps<"/propiedades/[slug]">
   const vendida = p.estado === "vendida";
   const precio = textoPrecio(p.precio);
   const otras = relacionadas(p);
-  const mensaje = mensajePropiedad(p.titulo, p.slug);
+  const mensaje = mensajePropiedad(p.titulo, p.slug, p.codigo);
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPropiedad(p)) }} />
       <section className="section ficha libre" aria-labelledby="ficha-h" data-barra={vendida ? "oculta" : "ficha"} data-barra-mensaje={vendida ? undefined : mensaje}>
         <div className="wrap">
-          <Link href="/propiedades" className="ficha__volver" transitionTypes={["nav-back"]}>
+          <Link href="/propiedades" className="ficha__volver">
             <ArrowLeft className="size-4" aria-hidden="true" />
             Todas las propiedades
           </Link>
           <header className="ficha__cabecera">
             <p className="ficha__tipo">
-              {nombreOperacion[p.operacion]} · {nombreCategoria[p.categoria].uno}
+              {nombreOperacion[p.operacion]} · {nombreCategoria[p.categoria].uno} · <span className="tabular">Código {p.codigo}</span>
               {vendida ? <span className="ficha__sello">Vendida</span> : null}
             </p>
             <h1 id="ficha-h">{p.titulo}</h1>
@@ -83,7 +85,7 @@ export default async function Ficha({ params }: PageProps<"/propiedades/[slug]">
               {p.detalles.length ? (
                 <div className="ficha__texto">
                   <h2>Detalles</h2>
-                  <ul className="ficha__lista">
+                  <ul className="ficha__lista ficha__lista--check">
                     {p.detalles.map((d) => (
                       <li key={d}>{d}</li>
                     ))}
@@ -101,7 +103,7 @@ export default async function Ficha({ params }: PageProps<"/propiedades/[slug]">
               <div className="ficha__texto">
                 <h2>Ubicación</h2>
                 <p>
-                  {ubicacionLarga(p)}.{" "}
+                  {ubicacionLarga(p).replace(/\.$/, "")}.{" "}
                   {p.ciudad ? "La dirección exacta se comparte al agendar la visita." : "La ubicación exacta se comparte por WhatsApp al consultar."}
                 </p>
               </div>
@@ -126,13 +128,14 @@ export default async function Ficha({ params }: PageProps<"/propiedades/[slug]">
                     <p className="ficha__nota">
                       {p.precio ? "Escríbenos para agendar la visita o pedir más fotos." : "Pregúntanos el precio y las condiciones por WhatsApp."}
                     </p>
-                    <BotonWhatsApp mensaje={mensaje} principal className="w-full" />
+                    <BotonWhatsApp mensaje={mensaje} texto="Escribir por WhatsApp" principal className="w-full" />
                     <Link href={`/contacto?inmueble=${encodeURIComponent(p.titulo)}`} className="link ficha__alterna">
                       Prefiero dejar mis datos
                     </Link>
                   </>
                 )}
               </div>
+              <Compartir titulo={p.titulo} url={`${sitio.url}/propiedades/${p.slug}`} />
             </aside>
           </div>
         </div>

@@ -1,4 +1,6 @@
-import type { CSSProperties } from "react";
+"use client";
+
+import type { CSSProperties, SyntheticEvent } from "react";
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 import type { Foto as TFoto } from "@/data/propiedades";
@@ -14,15 +16,25 @@ type Props = {
   estilo?: Record<string, string>;
 };
 
+function marcar(img: HTMLImageElement | null) {
+  if (img && img.complete && img.naturalWidth > 0) img.dataset.cargada = "";
+}
+
+function alCargar(e: SyntheticEvent<HTMLImageElement>) {
+  e.currentTarget.dataset.cargada = "";
+}
+
 export function Foto({ foto, alt, sizes, className, prioridad = false, fill = true, estilo }: Props) {
+  const clases = [prioridad ? null : "foto", className].filter(Boolean).join(" ");
   const comunes = {
     sizes,
-    className,
+    className: clases,
     style: estilo as CSSProperties | undefined,
-    placeholder: "blur" as const,
-    blurDataURL: foto.blur,
     fetchPriority: prioridad ? ("high" as const) : undefined,
     loading: prioridad ? ("eager" as const) : ("lazy" as const),
+    decoding: "async" as const,
+    ref: prioridad ? undefined : marcar,
+    onLoad: prioridad ? undefined : alCargar,
     ...(fill ? { fill: true as const } : { width: foto.width, height: foto.height }),
   };
   if (usaCloudinary) {

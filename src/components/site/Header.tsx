@@ -45,7 +45,7 @@ export function Header() {
           ))}
         </nav>
         <div className="nav__actions">
-          <BotonWhatsApp principal />
+          <BotonWhatsApp texto="WhatsApp" />
         </div>
         <button
           className="nav__toggle"

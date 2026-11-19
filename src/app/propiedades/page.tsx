@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { Catalogo } from "@/components/catalogo/Catalogo";
-import { Tarjeta } from "@/components/propiedad/Tarjeta";
+import { Catalogo, CatalogoVista } from "@/components/catalogo/Catalogo";
+import { sinFiltros } from "@/lib/filtros";
 import { catalogoOrdenado, ciudadesDisponibles, disponibles, propiedades, categorias, operaciones } from "@/data/propiedades";
 import { metadatosPagina } from "@/lib/seo";
 import { urlFotoAbsoluta } from "@/lib/medios";
@@ -26,17 +26,7 @@ export default function PaginaPropiedades() {
             {disponibles.length} inmuebles con fotos reales. Los resultados cambian mientras escribes; si no ves lo que buscas, escríbenos por WhatsApp.
           </p>
         </div>
-        <Suspense
-          fallback={
-            <ul className="catalogo__rejilla" aria-label="Inmuebles">
-              {catalogoOrdenado.map((p) => (
-                <li key={p.slug}>
-                  <Tarjeta p={p} nivel="h2" />
-                </li>
-              ))}
-            </ul>
-          }
-        >
+        <Suspense fallback={<CatalogoVista propiedades={catalogoOrdenado} operaciones={ops} tipos={tipos} ciudades={ciudadesDisponibles} inicial={sinFiltros} />}>
           <Catalogo propiedades={catalogoOrdenado} operaciones={ops} tipos={tipos} ciudades={ciudadesDisponibles} />
         </Suspense>
       </div>

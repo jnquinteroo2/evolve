@@ -44,6 +44,7 @@ const PropiedadBaseSchema = z.object({
   descripcion: z.array(z.string()).min(1),
   detalles: z.array(z.string()),
   destacada: z.boolean(),
+  portada: z.number().int().min(0).default(0),
   altFotos: z.array(z.string()),
 });
 
@@ -52,7 +53,7 @@ export type Video = z.infer<typeof VideoSchema>;
 export type Precio = z.infer<typeof PrecioSchema>;
 export type Operacion = (typeof operaciones)[number];
 export type Categoria = (typeof categorias)[number];
-export type Propiedad = z.infer<typeof PropiedadBaseSchema> & { fotos: Foto[]; video?: Video };
+export type Propiedad = z.infer<typeof PropiedadBaseSchema> & { fotos: Foto[]; video?: Video; codigo: string };
 
 const datos: z.input<typeof PropiedadBaseSchema>[] = [
   {
@@ -352,6 +353,7 @@ const datos: z.input<typeof PropiedadBaseSchema>[] = [
       "Parque infantil y vigilancia 24 horas",
     ],
     destacada: true,
+    portada: 2,
     altFotos: [
       "Vista al mar Caribe desde el balcón del piso 16",
       "Sala con sofás blancos y cocina abierta al fondo",
@@ -417,12 +419,12 @@ const datos: z.input<typeof PropiedadBaseSchema>[] = [
     datosClave: [
       { etiqueta: "Lote", valor: "5 × 12 m" },
       { etiqueta: "Niveles", valor: "4" },
-      { etiqueta: "Renta informada", valor: "$3.100.000 al mes" },
+      { etiqueta: "Luz", valor: "Contador por piso" },
       { etiqueta: "Antigüedad", valor: "10 años" },
     ],
     descripcion: [
-      "Casa de cuatro niveles en Suba Bilbao, segundo sector, sobre un lote de 5 m de frente por 12 m de fondo. Cada piso es un espacio independiente y hoy todos están arrendados.",
-      "Las rentas informadas por el propietario suman $3.100.000 al mes entre el garaje y los cuatro apartamentos. Cada piso tiene su contador de luz; el agua y el gas son compartidos.",
+      "Casa de cuatro niveles en Suba Bilbao, segundo sector, sobre un lote de 5 m de frente por 12 m de fondo. Cada piso es un espacio independiente con su propia renta informada.",
+      "El detalle de la renta que el propietario informa para cada espacio está en la lista de abajo. Cada piso tiene su contador de luz; el agua y el gas son compartidos.",
     ],
     detalles: [
       "Primer piso: garaje (renta de $200.000) y apartamento de dos alcobas, baño, cocina y sala (renta de $650.000)",
@@ -488,12 +490,13 @@ const datos: z.input<typeof PropiedadBaseSchema>[] = [
 
 const medios = MediosSchema.parse(mediosJson);
 
-export const propiedades: Propiedad[] = datos.map((d) => {
+export const propiedades: Propiedad[] = datos.map((d, i) => {
   const base = PropiedadBaseSchema.parse(d);
   const m = medios[base.slug];
   if (!m) throw new Error(`Sin medios para ${base.slug}`);
+  if (base.portada >= m.fotos.length) throw new Error(`Portada fuera de rango en ${base.slug}`);
   if (base.altFotos.length !== m.fotos.length) throw new Error(`Alt incompletos en ${base.slug}: ${base.altFotos.length} vs ${m.fotos.length}`);
-  return { ...base, fotos: m.fotos, video: m.video };
+  return { ...base, fotos: m.fotos, video: m.video, codigo: `EV-${String(i + 1).padStart(3, "0")}` };
 });
 
 export const disponibles = propiedades.filter((p) => p.estado === "disponible");

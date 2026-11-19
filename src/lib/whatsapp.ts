@@ -4,6 +4,6 @@ export function enlaceWhatsApp(mensaje = "Hola, quiero información sobre los in
   return `https://wa.me/${sitio.whatsapp.numero}?text=${encodeURIComponent(mensaje)}`;
 }
 
-export function mensajePropiedad(titulo: string, slug: string) {
-  return `Hola, me interesa el inmueble «${titulo}» (${sitio.url}/propiedades/${slug}). ¿Me pueden dar más información?`;
+export function mensajePropiedad(titulo: string, slug: string, codigo?: string) {
+  return `Hola, me interesa el inmueble «${titulo}»${codigo ? `, código ${codigo}` : ""} (${sitio.url}/propiedades/${slug}). ¿Me pueden dar más información?`;
 }

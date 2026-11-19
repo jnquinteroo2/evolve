@@ -1,18 +1,17 @@
 import Link from "next/link";
-import { Foto } from "@/components/Foto";
-import type { Foto as TFoto } from "@/data/propiedades";
 import { pilares } from "@/lib/contenido";
+import { plural } from "@/lib/formato";
 
-export function Pilares({ foto, alt }: { foto: TFoto; alt: string }) {
+type Zona = { ciudad: string; total: number };
+
+export function Pilares({ zonas }: { zonas: Zona[] }) {
   return (
-    <section className="section" id="nosotros" aria-labelledby="pilares-h">
+    <section className="section pilares libre" id="nosotros" aria-labelledby="pilares-h">
       <div className="wrap">
-        <div className="grid grid--top">
-          <div className="span-6 pilares__texto">
-            <div className="section-head">
-              <h2 id="pilares-h">Desde Funza, para la sabana y sus municipios</h2>
-              <p>Atendemos proyectos residenciales, comerciales e industriales en Funza, Bogotá y los municipios cercanos.</p>
-            </div>
+        <div className="pilares__grid">
+          <div className="pilares__texto">
+            <h2 id="pilares-h">Desde Funza, para la sabana y sus municipios</h2>
+            <p className="pilares__lead">Atendemos proyectos residenciales, comerciales e industriales en Funza, Bogotá y los municipios cercanos.</p>
             <dl className="pilares__lista">
               {pilares.map((p) => (
                 <div key={p.nombre}>
@@ -25,9 +24,19 @@ export function Pilares({ foto, alt }: { foto: TFoto; alt: string }) {
               Conocer a Evolve
             </Link>
           </div>
-          <div className="span-5 start-8 pilares__foto frame frame--photo">
-            <Foto foto={foto} alt={alt} sizes="(min-width: 1024px) 560px, 100vw" className="frame__img" />
-          </div>
+          <nav className="zonas" aria-labelledby="zonas-h">
+            <h3 id="zonas-h">Inmuebles por ciudad</h3>
+            <ul>
+              {zonas.map((z) => (
+                <li key={z.ciudad}>
+                  <Link href={`/propiedades?ciudad=${encodeURIComponent(z.ciudad)}`}>
+                    <span className="zonas__ciudad">{z.ciudad}</span>
+                    <span className="zonas__total tabular">{plural(z.total, "inmueble", "inmuebles")}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </section>

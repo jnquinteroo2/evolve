@@ -3,9 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: false,
-  experimental: {
-    inlineCss: true,
-  },
   images: {
     loader: "custom",
     loaderFile: "./src/lib/cargador-imagen.ts",
