@@ -31,7 +31,16 @@ async function existe(publicId, tipo) {
 async function subir(archivo, publicId, tipo) {
   const previo = forzar ? null : await existe(publicId, tipo);
   if (previo) return { estado: 'ya estaba', r: previo };
-  const r = await cloudinary.uploader.upload(archivo, { public_id: publicId, resource_type: tipo, overwrite: forzar, unique_filename: false, use_filename: false });
+  const r = await cloudinary.uploader.upload(archivo, {
+    public_id: publicId,
+    asset_folder: path.posix.dirname(publicId),
+    display_name: publicId.split('/').slice(-3).join(' '),
+    tags: ['evolve', publicId.split('/')[2]],
+    resource_type: tipo,
+    overwrite: forzar,
+    unique_filename: false,
+    use_filename: false,
+  });
   return { estado: 'subida', r };
 }
 

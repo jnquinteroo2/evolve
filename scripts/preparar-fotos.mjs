@@ -31,7 +31,7 @@ async function procesar(entrada, slug, orden, recorte) {
   }
   const blur = await sharp(destinoMaestro).resize(16).webp({ quality: 40 }).toBuffer();
   return {
-    publicId: `evolve/${slug}/${nombre}`,
+    publicId: `evolve/propiedades/${slug}/fotos/${nombre}`,
     local: `/fotos-local/${slug}/${nombre}.webp`,
     width: ancho,
     height: alto,
@@ -56,7 +56,7 @@ for (const [slug, cfg] of Object.entries(seleccion)) {
     const destinoVideoLocal = path.join(locales, slug, 'video.mp4');
     if (!existsSync(destinoVideoLocal)) await copyFile(video, destinoVideoLocal);
     const [w, h] = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', video]).toString().trim().split(',').map(Number);
-    medios[slug] = { fotos, video: { publicId: `evolve/${slug}/video`, local: `/fotos-local/${slug}/video.mp4`, width: w, height: h } };
+    medios[slug] = { fotos, video: { publicId: `evolve/propiedades/${slug}/video`, local: `/fotos-local/${slug}/video.mp4`, width: w, height: h } };
     continue;
   }
   const archivos = (await readdir(fuente)).filter((f) => /\.jpe?g$/i.test(f)).sort();
