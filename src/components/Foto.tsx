@@ -2,9 +2,8 @@
 
 import type { CSSProperties, SyntheticEvent } from "react";
 import Image from "next/image";
-import { CldImage } from "next-cloudinary";
 import type { Foto as TFoto } from "@/data/propiedades";
-import { usaCloudinary } from "@/lib/medios";
+import { srcFoto } from "@/lib/medios";
 
 type Props = {
   foto: TFoto;
@@ -37,10 +36,5 @@ export function Foto({ foto, alt, sizes, className, prioridad = false, fill = tr
     onLoad: prioridad ? undefined : alCargar,
     ...(fill ? { fill: true as const } : { width: foto.width, height: foto.height }),
   };
-  if (usaCloudinary) {
-    const r = foto.recorte;
-    const recorte = r ? [{ type: "crop" as const, x: r.x, y: r.y, width: r.width, height: r.height, source: true }, { type: "limit" as const }] : ("limit" as const);
-    return <CldImage src={foto.url} alt={alt} format="auto" quality="auto" crop={recorte} {...comunes} />;
-  }
-  return <Image src={foto.local} alt={alt} {...comunes} />;
+  return <Image src={srcFoto(foto)} alt={alt} {...comunes} />;
 }

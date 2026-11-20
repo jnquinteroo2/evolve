@@ -1,9 +1,5 @@
 import type { NextConfig } from "next";
 
-if (process.env.VERCEL && !process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
-  throw new Error("Falta NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME en las variables de entorno de Vercel");
-}
-
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: false,

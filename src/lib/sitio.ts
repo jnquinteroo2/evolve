@@ -1,7 +1,7 @@
 export const sitio = {
   nombre: "Evolve Inmobiliaria & Constructora",
   nombreCorto: "Evolve",
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://evolveinm.com").replace(/\/$/, ""),
+  url: "https://evolveinm.com",
   descripcion:
     "Inmobiliaria y constructora en Funza, Cundinamarca. Casas, bodegas, lotes y edificios en venta y arriendo en la sabana de Bogotá, más consultoría técnica, interventoría y construcción.",
   whatsapp: { numero: "573115244288", visible: "311 524 4288" },

@@ -12,7 +12,7 @@ const medios = {};
 
 const carpetasOtras = { '_extraidas/07-casa-girardot': 'casa-girardot', '_extraidas/10-bodega-aepi': 'bodega-aepi' };
 const carpetaNube = (fuente) => carpetasOtras[fuente] ?? path.basename(fuente).toLowerCase().trim().replace(/ /g, '-');
-const nube = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? 'dvrz5uflr';
+const nube = 'dvrz5uflr';
 const urlNube = (publicId, tipo = 'image') => `https://res.cloudinary.com/${nube}/${tipo}/upload/${publicId}.${tipo === 'video' ? 'mp4' : 'jpg'}`;
 const idNube = (fuente, archivo) => `evolve/${carpetaNube(fuente)}/${archivo.replace(/\.jpe?g$/i, '')}`;
 

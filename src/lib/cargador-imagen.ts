@@ -1,14 +1,7 @@
 type Entrada = { src: string; width: number; quality?: number };
 
-const nube = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-const anchosLocales = [640, 1080, 1600];
-
 export default function cargadorImagen({ src, width, quality }: Entrada) {
-  if (src.startsWith("/fotos-local/")) {
-    const ancho = anchosLocales.find((a) => a >= width) ?? anchosLocales.at(-1);
-    return src.replace(/\.webp$/, `-${ancho}.webp`);
-  }
-  if (src.startsWith("/") || !nube) return src;
-  const ajustes = ["f_auto", `q_${quality ?? "auto"}`, "c_limit", `w_${width}`].join(",");
-  return `https://res.cloudinary.com/${nube}/image/upload/${ajustes}/${src}`;
+  if (!src.startsWith("https://res.cloudinary.com/")) return src;
+  const ajustes = `c_limit,w_${width}/f_auto/q_${quality ?? "auto"}`;
+  return src.replace(/\/(v\d+\/)/, `/${ajustes}/$1`);
 }
