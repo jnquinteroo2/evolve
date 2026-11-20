@@ -5,7 +5,7 @@ export const operaciones = ["venta", "arriendo"] as const;
 export const categorias = ["casa", "apartamento", "bodega", "local", "lote", "edificio"] as const;
 
 const FotoSchema = z.object({
-  publicId: z.string(),
+  url: z.string().url(),
   local: z.string(),
   width: z.number().int().positive(),
   height: z.number().int().positive(),
@@ -15,7 +15,7 @@ const FotoSchema = z.object({
 });
 
 const VideoSchema = z.object({
-  publicId: z.string(),
+  url: z.string().url(),
   local: z.string(),
   width: z.number().int().positive(),
   height: z.number().int().positive(),

@@ -12,11 +12,14 @@ const medios = {};
 
 const carpetasOtras = { '_extraidas/07-casa-girardot': 'casa-girardot', '_extraidas/10-bodega-aepi': 'bodega-aepi' };
 const carpetaNube = (fuente) => carpetasOtras[fuente] ?? path.basename(fuente).toLowerCase().trim().replace(/ /g, '-');
+const nube = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? 'dvrz5uflr';
+const urlNube = (publicId, tipo = 'image') => `https://res.cloudinary.com/${nube}/${tipo}/upload/${publicId}.${tipo === 'video' ? 'mp4' : 'jpg'}`;
 const idNube = (fuente, archivo) => `evolve/${carpetaNube(fuente)}/${archivo.replace(/\.jpe?g$/i, '')}`;
 
 const normalizar = (f) => (typeof f === 'number' ? { n: f, recorte: {} } : { recorte: {}, ...f });
 
 async function procesar(entrada, slug, orden, recorte, publicId) {
+  const url = urlNube(publicId);
   const nombre = String(orden).padStart(2, '0');
   const base = sharp(entrada).rotate();
   const meta = await base.metadata();
@@ -35,7 +38,7 @@ async function procesar(entrada, slug, orden, recorte, publicId) {
   }
   const blur = await sharp(destinoMaestro).resize(16).webp({ quality: 40 }).toBuffer();
   return {
-    publicId,
+    url,
     local: `/fotos-local/${slug}/${nombre}.webp`,
     width: ancho,
     height: alto,
@@ -61,7 +64,7 @@ for (const [slug, cfg] of Object.entries(seleccion)) {
     const destinoVideoLocal = path.join(locales, slug, 'video.mp4');
     if (!existsSync(destinoVideoLocal)) await copyFile(video, destinoVideoLocal);
     const [w, h] = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', video]).toString().trim().split(',').map(Number);
-    medios[slug] = { fotos, video: { publicId: 'evolve/casa-suba/video', local: `/fotos-local/${slug}/video.mp4`, width: w, height: h } };
+    medios[slug] = { fotos, video: { url: urlNube('evolve/casa-suba/video', 'video'), local: `/fotos-local/${slug}/video.mp4`, width: w, height: h } };
     continue;
   }
   const archivos = (await readdir(fuente)).filter((f) => /\.jpe?g$/i.test(f)).sort();

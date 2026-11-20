@@ -40,7 +40,7 @@ export function Foto({ foto, alt, sizes, className, prioridad = false, fill = tr
   if (usaCloudinary) {
     const r = foto.recorte;
     const recorte = r ? [{ type: "crop" as const, x: r.x, y: r.y, width: r.width, height: r.height, source: true }, { type: "limit" as const }] : ("limit" as const);
-    return <CldImage src={foto.publicId} alt={alt} format="auto" quality="auto" crop={recorte} {...comunes} />;
+    return <CldImage src={foto.url} alt={alt} format="auto" quality="auto" crop={recorte} {...comunes} />;
   }
   return <Image src={foto.local} alt={alt} {...comunes} />;
 }

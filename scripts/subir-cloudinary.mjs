@@ -1,4 +1,4 @@
-import { readdir } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { config } from 'dotenv';
 import { v2 as cloudinary } from 'cloudinary';
@@ -45,14 +45,17 @@ async function existe(publicId, tipo) {
   }
 }
 
+const urls = {};
 let subidas = 0;
 let previas = 0;
 for (const t of tareas) {
-  if (!forzar && (await existe(t.publicId, t.tipo))) {
+  const previo = forzar ? null : await existe(t.publicId, t.tipo);
+  if (previo) {
+    urls[t.publicId] = previo.secure_url;
     previas++;
     continue;
   }
-  await cloudinary.uploader.upload(t.archivo, {
+  const r = await cloudinary.uploader.upload(t.archivo, {
     public_id: t.publicId,
     asset_folder: t.carpeta,
     tags: ['evolve', t.publicId.split('/')[1]],
@@ -61,7 +64,16 @@ for (const t of tareas) {
     use_filename: false,
     unique_filename: false,
   });
+  urls[t.publicId] = r.secure_url;
   subidas++;
   console.log(`subida ${t.carpeta} -> ${t.publicId}`);
 }
-console.log(`\n${subidas} subidas, ${previas} ya estaban.`);
+const rutaMedios = path.join(raiz, 'src/data/medios.json');
+const medios = JSON.parse(await readFile(rutaMedios, 'utf8'));
+const idDe = (url) => url.replace(/^.*\/upload\/(v\d+\/)?/, '').replace(/\.\w+$/, '');
+for (const m of Object.values(medios)) {
+  for (const f of m.fotos) f.url = urls[idDe(f.url)] ?? f.url;
+  if (m.video) m.video.url = urls[idDe(m.video.url)] ?? m.video.url;
+}
+await writeFile(rutaMedios, JSON.stringify(medios, null, 2) + '\n');
+console.log(`\n${subidas} subidas, ${previas} ya estaban. medios.json actualizado con las URLs de Cloudinary.`);

@@ -64,7 +64,7 @@ export function Galeria({ titulo, fotos, alts }: Props) {
       <div className={`galeria galeria--${Math.min(visibles.length, 5)}`}>
         {visibles.map((f, i) => (
           <button
-            key={f.publicId}
+            key={f.url}
             type="button"
             className={`galeria__celda ${i === 0 ? "galeria__celda--principal" : ""}`}
             onClick={() => abrir(i)}
@@ -98,7 +98,7 @@ export function Galeria({ titulo, fotos, alts }: Props) {
         </div>
         <div className="lightbox__pista" ref={pista} tabIndex={0} role="group" aria-roledescription="carrusel" aria-label="Fotos">
           {fotos.map((f, i) => (
-            <figure key={f.publicId} className="lightbox__foto" role="group" aria-roledescription="foto" aria-label={`${i + 1} de ${total}`}>
+            <figure key={f.url} className="lightbox__foto" role="group" aria-roledescription="foto" aria-label={`${i + 1} de ${total}`}>
               <Foto foto={f} alt={alts[i]} sizes="100vw" fill={false} className="lightbox__img" />
             </figure>
           ))}
