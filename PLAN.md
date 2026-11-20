@@ -108,7 +108,7 @@ El WhatsApp de cada ficha: `https://wa.me/573115244288?text=` + "Hola, me intere
 
 Todos los pares se validarán con `design-system`/checker (`text-contrast`). Sin modo oscuro: el brief no lo pide y la marca es crema; el logo se valida igual sobre fondo claro (header) y oscuro (footer pino).
 
-**Tipografía:** Newsreader 400 en titulares (tracking −1,8 % a −2,5 %, eje óptico), Hanken Grotesk 400/500 en texto, 16 px mínimo en cuerpo y 16 px en inputs (sin zoom en iOS). Cifras tabulares en precios y datos clave.
+**Tipografía:** Plus Jakarta Sans como única fuente: 500 en titulares (tracking 0), 400/500/600 en texto, 16 px mínimo en cuerpo y 16 px en inputs (sin zoom en iOS). Cifras tabulares en precios y datos clave.
 
 **Radio:** `soft`. **Botones:** `solid`, un solo par (primario pino, secundario contorno). **Iconos:** lucide en trazo fino solo para datos clave (m², camas, baños, parqueo) y el logo real de WhatsApp.
 
