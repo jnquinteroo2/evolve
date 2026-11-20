@@ -10,9 +10,13 @@ const maestros = path.join(raiz, '_medios');
 const locales = path.join(raiz, 'public/fotos-local');
 const medios = {};
 
+const carpetasOtras = { '_extraidas/07-casa-girardot': 'casa-girardot', '_extraidas/10-bodega-aepi': 'bodega-aepi' };
+const carpetaNube = (fuente) => carpetasOtras[fuente] ?? path.basename(fuente).toLowerCase().trim().replace(/ /g, '-');
+const idNube = (fuente, archivo) => `evolve/${carpetaNube(fuente)}/${archivo.replace(/\.jpe?g$/i, '')}`;
+
 const normalizar = (f) => (typeof f === 'number' ? { n: f, recorte: {} } : { recorte: {}, ...f });
 
-async function procesar(entrada, slug, orden, recorte) {
+async function procesar(entrada, slug, orden, recorte, publicId) {
   const nombre = String(orden).padStart(2, '0');
   const base = sharp(entrada).rotate();
   const meta = await base.metadata();
@@ -31,12 +35,13 @@ async function procesar(entrada, slug, orden, recorte) {
   }
   const blur = await sharp(destinoMaestro).resize(16).webp({ quality: 40 }).toBuffer();
   return {
-    publicId: `evolve/propiedades/${slug}/fotos/${nombre}`,
+    publicId,
     local: `/fotos-local/${slug}/${nombre}.webp`,
     width: ancho,
     height: alto,
     orden,
     blur: `data:image/webp;base64,${blur.toString('base64')}`,
+    ...(izq || abajo ? { recorte: { x: izq, y: 0, width: ancho, height: alto } } : {}),
   };
 }
 
@@ -49,19 +54,19 @@ for (const [slug, cfg] of Object.entries(seleccion)) {
       const tmp = path.join(maestros, slug, `fotograma-${i + 1}.png`);
       await mkdir(path.dirname(tmp), { recursive: true });
       execFileSync('ffmpeg', ['-v', 'error', '-y', '-ss', String(t), '-i', video, '-frames:v', '1', tmp]);
-      fotos.push(await procesar(tmp, slug, i + 1, {}));
+      fotos.push(await procesar(tmp, slug, i + 1, {}, 'evolve/casa-suba/fotograma'));
     }
     const destinoVideo = path.join(maestros, slug, 'video.mp4');
     if (!existsSync(destinoVideo)) await copyFile(video, destinoVideo);
     const destinoVideoLocal = path.join(locales, slug, 'video.mp4');
     if (!existsSync(destinoVideoLocal)) await copyFile(video, destinoVideoLocal);
     const [w, h] = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', video]).toString().trim().split(',').map(Number);
-    medios[slug] = { fotos, video: { publicId: `evolve/propiedades/${slug}/video`, local: `/fotos-local/${slug}/video.mp4`, width: w, height: h } };
+    medios[slug] = { fotos, video: { publicId: 'evolve/casa-suba/video', local: `/fotos-local/${slug}/video.mp4`, width: w, height: h } };
     continue;
   }
   const archivos = (await readdir(fuente)).filter((f) => /\.jpe?g$/i.test(f)).sort();
   for (const [i, item] of cfg.fotos.map(normalizar).entries()) {
-    fotos.push(await procesar(path.join(fuente, archivos[item.n - 1]), slug, i + 1, item.recorte));
+    fotos.push(await procesar(path.join(fuente, archivos[item.n - 1]), slug, i + 1, item.recorte, idNube(cfg.fuente, archivos[item.n - 1])));
   }
   medios[slug] = { fotos };
 }

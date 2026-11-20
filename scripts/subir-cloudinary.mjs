@@ -1,5 +1,4 @@
-import { readFile, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { config } from 'dotenv';
 import { v2 as cloudinary } from 'cloudinary';
@@ -14,10 +13,28 @@ if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
 cloudinary.config({ cloud_name: CLOUDINARY_CLOUD_NAME, api_key: CLOUDINARY_API_KEY, api_secret: CLOUDINARY_API_SECRET, secure: true });
 
 const raiz = process.cwd();
-const rutaMedios = path.join(raiz, 'src/data/medios.json');
-const medios = JSON.parse(await readFile(rutaMedios, 'utf8'));
-const maestros = path.join(raiz, '_medios');
 const forzar = process.argv.includes('--forzar');
+const archivosDe = async (dir, patron) => (await readdir(dir)).filter((f) => patron.test(f)).sort();
+const slug = (nombre) => nombre.toLowerCase().trim().replace(/ /g, '-');
+
+const tareas = [];
+for (const carpeta of (await readdir(path.join(raiz, '_fotos-originales'))).filter((d) => !d.startsWith('.'))) {
+  const dir = path.join(raiz, '_fotos-originales', carpeta);
+  for (const f of await archivosDe(dir, /\.jpe?g$/i)) {
+    tareas.push({ archivo: path.join(dir, f), publicId: `evolve/${slug(carpeta)}/${f.replace(/\.jpe?g$/i, '')}`, carpeta: `Evolve/${carpeta.trim()}`, tipo: 'image' });
+  }
+}
+const otras = [
+  ['_extraidas/07-casa-girardot', 'casa-girardot', 'Casa Girardot'],
+  ['_extraidas/10-bodega-aepi', 'bodega-aepi', 'Bodega AEPI'],
+];
+for (const [origen, id, carpeta] of otras) {
+  for (const f of await archivosDe(path.join(raiz, origen), /\.jpe?g$/i)) {
+    tareas.push({ archivo: path.join(raiz, origen, f), publicId: `evolve/${id}/${f.replace(/\.jpe?g$/i, '')}`, carpeta: `Evolve/${carpeta}`, tipo: 'image' });
+  }
+}
+tareas.push({ archivo: path.join(raiz, '_medios/casa-multifamiliar-suba/01.jpg'), publicId: 'evolve/casa-suba/fotograma', carpeta: 'Evolve/Casa Suba', tipo: 'image' });
+tareas.push({ archivo: path.join(raiz, '_extraidas/12-casa-multifamiliar-bogota/01.mp4'), publicId: 'evolve/casa-suba/video', carpeta: 'Evolve/Casa Suba', tipo: 'video' });
 
 async function existe(publicId, tipo) {
   try {
@@ -28,46 +45,23 @@ async function existe(publicId, tipo) {
   }
 }
 
-async function subir(archivo, publicId, tipo) {
-  const previo = forzar ? null : await existe(publicId, tipo);
-  if (previo) return { estado: 'ya estaba', r: previo };
-  const r = await cloudinary.uploader.upload(archivo, {
-    public_id: publicId,
-    asset_folder: path.posix.dirname(publicId),
-    display_name: publicId.split('/').slice(-3).join(' '),
-    tags: ['evolve', publicId.split('/')[2]],
-    resource_type: tipo,
-    overwrite: forzar,
-    unique_filename: false,
-    use_filename: false,
-  });
-  return { estado: 'subida', r };
-}
-
 let subidas = 0;
 let previas = 0;
-for (const [slug, m] of Object.entries(medios)) {
-  for (const foto of m.fotos) {
-    const nombre = foto.publicId.split('/').pop();
-    const archivo = path.join(maestros, slug, `${nombre}.jpg`);
-    if (!existsSync(archivo)) throw new Error(`No existe ${archivo}; corre primero npm run fotos`);
-    const { estado, r } = await subir(archivo, foto.publicId, 'image');
-    foto.width = r.width;
-    foto.height = r.height;
-    if (estado === 'subida') subidas++;
-    else previas++;
-    console.log(`${estado.padEnd(9)} ${foto.publicId} ${r.width}x${r.height}`);
+for (const t of tareas) {
+  if (!forzar && (await existe(t.publicId, t.tipo))) {
+    previas++;
+    continue;
   }
-  if (m.video) {
-    const archivo = path.join(maestros, slug, 'video.mp4');
-    const { estado, r } = await subir(archivo, m.video.publicId, 'video');
-    m.video.width = r.width;
-    m.video.height = r.height;
-    if (estado === 'subida') subidas++;
-    else previas++;
-    console.log(`${estado.padEnd(9)} ${m.video.publicId} (video) ${r.width}x${r.height}`);
-  }
+  await cloudinary.uploader.upload(t.archivo, {
+    public_id: t.publicId,
+    asset_folder: t.carpeta,
+    tags: ['evolve', t.publicId.split('/')[1]],
+    resource_type: t.tipo,
+    overwrite: forzar,
+    use_filename: false,
+    unique_filename: false,
+  });
+  subidas++;
+  console.log(`subida ${t.carpeta} -> ${t.publicId}`);
 }
-
-await writeFile(rutaMedios, JSON.stringify(medios, null, 2) + '\n');
-console.log(`\n${subidas} subidas, ${previas} ya estaban. medios.json actualizado.`);
+console.log(`\n${subidas} subidas, ${previas} ya estaban.`);

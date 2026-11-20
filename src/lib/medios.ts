@@ -10,7 +10,9 @@ export function srcFoto(f: Foto) {
 
 export function urlFotoAbsoluta(f: Foto, ancho = 1200, alto = 630) {
   if (!usaCloudinary) return f.local.replace(/\.webp$/, "-1600.webp");
-  return `https://res.cloudinary.com/${nube}/image/upload/f_jpg,q_auto,c_fill,g_auto,w_${ancho},h_${alto}/${f.publicId}`;
+  const r = f.recorte;
+  const previo = r ? `c_crop,x_${r.x},y_${r.y},w_${r.width},h_${r.height}/` : "";
+  return `https://res.cloudinary.com/${nube}/image/upload/${previo}f_jpg,q_auto,c_fill,g_auto,w_${ancho},h_${alto}/${f.publicId}`;
 }
 
 export function srcVideo(v: Video) {

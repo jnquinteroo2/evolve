@@ -11,6 +11,7 @@ const FotoSchema = z.object({
   height: z.number().int().positive(),
   orden: z.number().int().positive(),
   blur: z.string(),
+  recorte: z.object({ x: z.number().int().nonnegative(), y: z.number().int().nonnegative(), width: z.number().int().positive(), height: z.number().int().positive() }).optional(),
 });
 
 const VideoSchema = z.object({
